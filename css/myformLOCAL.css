@@ -1,0 +1,28 @@
+
+@import url(myformGLOBAL.css);
+
+form.myform {
+				font-family: Courier, monospace;
+			}
+
+form.myform {
+	width:600px;
+}
+
+form.myform>fieldset {
+	background-color: lime;
+	border-radius:15px;
+}
+
+form.myform>fieldset fieldset {
+	border-style:none;
+}
+
+form.myform>fieldset fieldset>legend {
+	font-size:smaller;
+}
+
+
+
+
+

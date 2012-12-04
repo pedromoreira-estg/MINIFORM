@@ -1,0 +1,209 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="css/myformLOCAL.css"/>	
+		<meta charset="UTF-8">	
+	<script>
+		function init() {
+			document.forms["f1"].onsubmit = validate;
+		}
+		
+		function validate() {
+			//debugger;
+			emessages =  Array();
+			var form_is_valid = true;
+		
+			// validate field name
+				if (!validate_txt_size("f1","iname",3,20)) {
+					form_is_valid = false;
+					emessages.push("field name must have a length between 3 and 20 ");
+				}
+				
+			// validate field username
+				if (!validate_txt_size("f1","iusername",6,10)) {
+					form_is_valid = false;
+					emessages.push("field username must have a length between 6 and 10 ");
+				}
+				
+				
+			// validate field gender
+				if (!validate_radio("f1","vgender")) {
+					form_is_valid = false;
+					emessages.push("you must select the gender");
+				}
+				
+		   // validate field gender
+				if (!validate_check("f1","vhobby[]",2)) {
+					form_is_valid = false;
+					emessages.push("you must select at least two hobbies");
+				}
+				
+		  // validate field course
+				if (!validate_select("f1","vcourse",1,0)) {
+					form_is_valid = false;
+					emessages.push("you must select at least one elective course");
+				}
+				
+			if (!form_is_valid) {
+				var message="";
+				for(var i=0; i < emessages.length; i++) {
+					
+					message += emessages[i] + '\n';;
+				}
+				alert(message);
+			}
+			
+			return form_is_valid;
+
+		}
+		
+		function validate_txt_size(formid,fieldid,min,max) {
+			// var the_txtsize = document.forms[formid].elements[fieldid].value.length;
+			
+			var the_txtfield = document.forms[formid].elements[fieldid];
+			var the_txtvalue = the_txtfield.value;
+			var the_txtsize = the_txtvalue.length;
+			if (the_txtsize < min || the_txtsize > max) {
+				return false;
+			} else {
+				return true;
+			}			
+			
+		}
+		function validate_radio(formid,fieldname) {
+			// var the_txtsize = document.forms[formid].elements[fieldid].value.length;
+			//debugger;
+			var radio_is_valid = false;
+			
+			var the_radiofields = document.forms[formid].elements[fieldname];
+			for (var i=0 ; i < the_radiofields.length; i++) {
+					if (the_radiofields[i].checked) {
+						radio_is_valid = true;
+						break;
+					}
+			}
+			
+			return radio_is_valid;	
+		}
+		
+		function validate_check(formid,fieldname,min) {
+			// var the_txtsize = document.forms[formid].elements[fieldid].value.length;
+			// debugger;
+			var check_is_valid = false;
+			var number_checks = 0;
+			
+			
+			var the_checks = document.forms[formid].elements[fieldname];
+			for (var i=0 ; i < the_checks.length; i++) {
+					if (the_checks[i].checked) {
+						number_checks++;
+						if(number_checks >= min) {	
+							check_is_valid = true;
+							break;
+						}
+					}
+			}
+			return check_is_valid;	
+		}
+		
+		
+		function validate_select(formid,fieldname,min,idx) {
+			// var the_txtsize = document.forms[formid].elements[fieldid].value.length;
+			debugger;
+			var select_is_valid = false;
+			var number_options = 0;
+			
+			
+			var the_options = document.forms[formid].elements[fieldname].options;
+			for (var i=0 ; i < the_options.length; i++) {
+					if (i!==idx && the_options[i].selected) {
+						number_options++;
+						if(number_options >= min) {	
+							select_is_valid = true;
+							break;
+						}
+					}
+			}
+			return select_is_valid;	
+		}
+		
+	</script>
+		</head>
+
+	<body onload="init();">
+		<form id="f1" class="myform" action="show.php" method="get">
+			<fieldset id="fsglobal">
+				<legend>registration</legend>
+				<ul>
+					<li>
+						<label for="iname" id="fname">name:</label>
+						<input id="iname" name="vname" type="text"/>
+						<span id="sname" class="valstatus"></span>
+					</li>
+					<li>
+						<label for="iusername" id="fusername">username:</label>
+						<input id="iusername" name="vusername" type="text"/>
+						<span id="susername" class="valstatus"></span>
+					</li>
+					<li>
+						<label for="iage" id="fage">age:</label>
+						<input id="iage" name="vage" type="text"/>
+						<span id="sage" class="valstatus"></span>
+					</li>
+					<li>
+						<label for="iemail" id="femail">age:</label>
+						<input id="iemail" name="vemail" type="text"/>
+						<span id="semail" class="valstatus"></span>
+					</li>
+					<li>
+						<fieldset>
+							<legend>gender</legend>
+							<ul>
+								<li>
+									<label for="rgenderf" id="fgenderf">female</label>
+									<input id="rgenderf" name="vgender" value="f" type="radio"/>
+								</li>
+								<li>
+									<label for="rgenderm" id="fgenderm">male</label>
+									<input id="rgenderm" name="vgender" value="m" type="radio"/>
+								</li>
+							</ul>
+						</fieldset>
+					</li>
+					<li>
+						<fieldset>
+							<legend>hobbies</legend>
+							<ul>
+								<li>
+									<label for="rhobby1" id="fhobby1">cinema</label>
+									<input id="rhobby1" name="vhobby[]" value="h1" type="checkbox"/>
+								</li>
+								<li>
+									<label for="rhobby2" id="fhobby2">sports</label>
+									<input id="rhobby2" name="vhobby[]" value="h2" type="checkbox"/>
+								</li>
+								<li>
+									<label for="rhobby3" id="fhobby3">sleep</label>
+									<input id="rhobby3" name="vhobby[]" value="h3" type="checkbox"/>
+								</li>
+							</ul>
+						</fieldset>
+					<li>
+						<label for="scourse" id="course">Choose an elective course from the list</label>
+						<select name="vcourse" id="icourse">
+							<option checked="checked">--Select from this list--</option>
+							<option value="SIR"> Sistemas de Informação em Rede</option>
+							<option value="PRL&C">Portuguese Language and Culture</option>
+							<option value="HTKS@M&BS">How to Keep sleeping at mornings and be successful</option>
+						</select>
+					</li>
+					</li>
+					<li>
+						<input id="isubmit" type="submit" value="register"/>
+						<input id="ireset" type="reset" value="clear"/>
+					</li>
+					
+				</ul>
+			</fieldset>
+		</form>
+	</body>
+</html>
